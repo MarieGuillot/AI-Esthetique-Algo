@@ -51,7 +51,7 @@ function setup() {
 
   const inputs = {
       "source_imgs": base64Image,
-      "scratch_remove": true,
+      "scratch_remove": false,
   };
   
   ai.query(inputs).then(outputs => {

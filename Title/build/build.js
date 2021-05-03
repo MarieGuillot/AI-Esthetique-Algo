@@ -1,29 +1,41 @@
 var gui = new dat.GUI();
 var params = {
-    Ellipse_Size: 30,
     Download_Image: function () { return save(); },
 };
-gui.add(params, "Ellipse_Size", 0, 100, 1);
 gui.add(params, "Download_Image");
 var typoTitre;
 var typoNoms;
+var noiseZ = 1;
+var colorText = 0;
 function draw() {
+    blendMode(BLEND);
+    translate(width / 2, height / 2);
     background(0);
     textFont(typoTitre);
     textSize(height / 5);
     textAlign(CENTER, CENTER);
-    translate(width / 2, height / 2);
-    fill(256);
+    fill(colorText);
+    if (colorText < 190) {
+        colorText += 0.8;
+    }
     var title = 'Alive';
     text(title, 0, 0);
     textFont(typoNoms);
     textSize(height / 20);
     var names = 'Sirine Bradai & Marie Guillot';
     text(names, 0, 2 * height / 5);
+    resetMatrix();
+    blendMode(OVERLAY);
+    noiseZ += 0.05;
+    for (var x = 0; x < height; x += 1) {
+        fill(noise(0.1 * x, noiseZ) * 256);
+        noStroke();
+        rect(0, x, width, 1);
+    }
 }
 function setup() {
     p6_CreateCanvas();
-    typoTitre = loadFont('./font/Thegoldsmithvintage-gXOY.otf');
+    typoTitre = loadFont('./font/Sarpanch-Bold.ttf');
     typoNoms = loadFont('./font/TitilliumWeb-ExtraLight.ttf');
 }
 function windowResized() {

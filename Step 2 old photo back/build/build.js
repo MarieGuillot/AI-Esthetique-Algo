@@ -4,10 +4,8 @@ function preload() {
 }
 var gui = new dat.GUI();
 var params = {
-    Ellipse_Size: 30,
     Download_Image: function () { return save(); },
 };
-gui.add(params, "Ellipse_Size", 0, 100, 1);
 gui.add(params, "Download_Image");
 var ai = new rw.HostedModel({
     url: "https://bringing-old-photos-back-to-life-81a5e281.hosted-models.runwayml.cloud/v1/",
@@ -23,11 +21,12 @@ function draw() {
 }
 function setup() {
     p6_CreateCanvas();
+    ai.info().then(function (info) { return console.log(info); });
     tmpImage.loadPixels();
     var base64Image = tmpImage.canvas.toDataURL();
     var inputs = {
         "source_imgs": base64Image,
-        "scratch_remove": 1,
+        "scratch_remove": true,
     };
     ai.query(inputs).then(function (outputs) {
         var image = outputs.image;

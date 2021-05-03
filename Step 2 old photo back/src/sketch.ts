@@ -10,10 +10,8 @@ function preload() {
 
 const gui = new dat.GUI()
 const params = {
-    Ellipse_Size: 30,
     Download_Image: () => save(),
 }
-gui.add(params, "Ellipse_Size", 0, 100, 1)
 gui.add(params, "Download_Image")
 
 const ai = new rw.HostedModel({
@@ -45,13 +43,15 @@ function draw() {
 function setup() {
     p6_CreateCanvas()
 
+    ai.info().then(info => console.log(info));
+
     tmpImage.loadPixels()
     const base64Image = tmpImage.canvas.toDataURL()
     
 
   const inputs = {
       "source_imgs": base64Image,
-      "scratch_remove": 1,
+      "scratch_remove": true,
   };
   
   ai.query(inputs).then(outputs => {

@@ -18,6 +18,9 @@ let typoNoms;
 let noiseZ = 1;
 let colorText = 0;
 
+let time = 0;
+
+
 function draw() {
     blendMode(BLEND)
     translate(width/2, height/2)
@@ -52,6 +55,9 @@ function draw() {
        // }
     }
 
+    //p6_SaveImageSequence(100,"jpg");
+
+    
 
 }
 

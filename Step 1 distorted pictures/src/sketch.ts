@@ -19,14 +19,14 @@ const ai = new rw.HostedModel({
 
   let z = []
 
-  let troncat = 0.01
+  let troncat = 0.8
    
   function mouseClicked () {
     for (let i = 0; i<512; i++) {
-        z[i] ++
+        z[i] -=0.1
     }
 
-    //troncat += 0.1
+    troncat += 0.1
 
     const inputs = {
         "z": z,
@@ -58,13 +58,8 @@ function setup() {
     p6_CreateCanvas()
 
     for (let i = 0; i<512; i++) {
-        z[i] = Math.random()
+        z[i] = Math.random()*(-i)*noise(i)*(1/512)
     }
-
-    for (let i = 0; i<512; i++) {
-      z[i] ++
-  }
-    
 
     //// You can use the info() method to see what type of input object the model expects
     // model.info().then(info => console.log(info));
@@ -79,7 +74,8 @@ function setup() {
     // use the outputs in your project
   });
 
-
+  ai.info().then(info => console.log(info));
+  console.log(z);
 }
 
 function windowResized() {

@@ -7,6 +7,7 @@ var typoTitre;
 var typoNoms;
 var noiseZ = 1;
 var colorText = 0;
+var time = 0;
 function draw() {
     blendMode(BLEND);
     translate(width / 2, height / 2);

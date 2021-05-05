@@ -11,11 +11,12 @@ var ai = new rw.HostedModel({
 });
 var img;
 var z = [];
-var troncat = 0.01;
+var troncat = 0.8;
 function mouseClicked() {
     for (var i = 0; i < 512; i++) {
-        z[i]++;
+        z[i] -= 0.1;
     }
+    troncat += 0.1;
     var inputs = {
         "z": z,
         "truncation": troncat
@@ -33,10 +34,7 @@ function draw() {
 function setup() {
     p6_CreateCanvas();
     for (var i = 0; i < 512; i++) {
-        z[i] = Math.random();
-    }
-    for (var i = 0; i < 512; i++) {
-        z[i]++;
+        z[i] = Math.random() * (-i) * noise(i) * (1 / 512);
     }
     var inputs = {
         "z": z,
@@ -47,6 +45,8 @@ function setup() {
         img = createImg(image);
         img.hide();
     });
+    ai.info().then(function (info) { return console.log(info); });
+    console.log(z);
 }
 function windowResized() {
     p6_ResizeCanvas();

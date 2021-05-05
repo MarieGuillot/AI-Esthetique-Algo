@@ -1,7 +1,7 @@
 let tmpImage: p5.Image
 
 function preload() {
-    tmpImage = loadImage("../img/start.png")
+    tmpImage = loadImage("../img/start.jpg")
 }
 
 // -------------------

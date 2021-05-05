@@ -1,6 +1,6 @@
 var tmpImage;
 function preload() {
-    tmpImage = loadImage("../img/start.png");
+    tmpImage = loadImage("../img/start.jpg");
 }
 var gui = new dat.GUI();
 var params = {
@@ -26,7 +26,7 @@ function setup() {
     var base64Image = tmpImage.canvas.toDataURL();
     var inputs = {
         "source_imgs": base64Image,
-        "scratch_remove": true,
+        "scratch_remove": false,
     };
     ai.query(inputs).then(function (outputs) {
         var image = outputs.image;

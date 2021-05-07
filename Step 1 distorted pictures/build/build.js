@@ -11,12 +11,9 @@ var ai = new rw.HostedModel({
 });
 var img;
 var z = [];
-var troncat = 0.8;
+var troncat = 37;
 function mouseClicked() {
-    for (var i = 0; i < 512; i++) {
-        z[i] -= 0.1;
-    }
-    troncat += 0.1;
+    troncat -= 0.1;
     var inputs = {
         "z": z,
         "truncation": troncat
@@ -30,11 +27,36 @@ function mouseClicked() {
 function draw() {
     if (img)
         image(img, 0, 0, width, height);
+    var i;
+    for (i = 0; i < 36; i++) {
+        troncat -= 1;
+        var inputs = {
+            "z": z,
+            "truncation": troncat
+        };
+        ai.query(inputs).then(function (outputs) {
+            var image = outputs.image;
+            img = createImg(image);
+            img.hide();
+        });
+    }
+    if (i == 36) {
+        troncat -= 0.99 / 84;
+        var inputs = {
+            "z": z,
+            "truncation": troncat
+        };
+        ai.query(inputs).then(function (outputs) {
+            var image = outputs.image;
+            img = createImg(image);
+            img.hide();
+        });
+    }
 }
 function setup() {
     p6_CreateCanvas();
     for (var i = 0; i < 512; i++) {
-        z[i] = Math.random() * (-i) * noise(i) * (1 / 512);
+        z[i] = Math.random() * (-i) * noise(i) * i;
     }
     var inputs = {
         "z": z,

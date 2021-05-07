@@ -19,14 +19,14 @@ const ai = new rw.HostedModel({
 
   let z = []
 
-  let troncat = 0.8
+  let troncat = 37
    
   function mouseClicked () {
-    for (let i = 0; i<512; i++) {
-        z[i] -=0.1
-    }
+    /*for (let i = 0; i<512; i++) {
+        z[i] *=34
+    }*/
 
-    troncat += 0.1
+    troncat -= 0.1
 
     const inputs = {
         "z": z,
@@ -48,6 +48,37 @@ const ai = new rw.HostedModel({
 function draw() {
     if (img)
         image(img, 0, 0, width, height)
+
+        let i;
+    for (i = 0; i<36; i++) {
+      troncat -= 1
+
+    const inputs = {
+        "z": z,
+        "truncation": troncat
+      };
+
+    ai.query(inputs).then(outputs => {
+        const { image } = outputs;
+        img = createImg(image)
+        img.hide()
+      });
+    } 
+
+    if (i==36) {
+      troncat -= 0.99/84
+
+      const inputs = {
+          "z": z,
+          "truncation": troncat
+        };
+  
+      ai.query(inputs).then(outputs => {
+          const { image } = outputs;
+          img = createImg(image)
+          img.hide()
+        });
+    }
 }
 
 // -------------------
@@ -58,7 +89,7 @@ function setup() {
     p6_CreateCanvas()
 
     for (let i = 0; i<512; i++) {
-        z[i] = Math.random()*(-i)*noise(i)*(1/512)
+        z[i] = Math.random()*(-i)*noise(i)*i
     }
 
     //// You can use the info() method to see what type of input object the model expects

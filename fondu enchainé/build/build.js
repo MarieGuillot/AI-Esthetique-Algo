@@ -1,63 +1,24 @@
+var colorImg;
+var nbImg;
 var gui = new dat.GUI();
 var params = {
-    Ellipse_Size: 30,
     Download_Image: function () { return save(); },
 };
-gui.add(params, "Ellipse_Size", 0, 100, 1);
 gui.add(params, "Download_Image");
-var ai = new rw.HostedModel({
-    url: "https://ascinte-seated-2fc3490a.hosted-models.runwayml.cloud/v1/",
-    token: "jNbL7oB5g2LFlL3iHN880A==",
-});
-var img;
-var z = [];
-var troncat = 37;
+var transparence = 0;
 function draw() {
-    if (img) {
-        image(img, 0, 0, width, height);
-    }
+    image(nbImg, 0, 0, width, height);
+    tint(255, transparence);
+    transparence += 2;
+    image(colorImg, 0, 0, width, height);
+    p6_SaveImageSequence(128, "jpg");
 }
-var frameNB = 0;
-var NB_FRAMES_TO_EXPORT = 120;
-function make_request() {
-    var inputs = {
-        "z": z,
-        "truncation": troncat
-    };
-    ai.query(inputs).then(function (outputs) {
-        var image = outputs.image;
-        img = createImg(image);
-        img.hide();
-        if (frameNB < 35) {
-            troncat -= 1;
-        }
-        else {
-            troncat -= 0.1;
-        }
-        p5.prototype.downloadFile(image, frameNB.toString(), "png");
-        frameNB++;
-        if (frameNB < NB_FRAMES_TO_EXPORT) {
-            make_request();
-        }
-    });
+function preload() {
+    colorImg = loadImage("../img/color.png");
+    nbImg = loadImage("../img/nb.png");
 }
 function setup() {
     p6_CreateCanvas();
-    for (var i = 0; i < 512; i++) {
-        z[i] = Math.random() * (-i) * noise(i) * i;
-    }
-    var inputs = {
-        "z": z,
-        "truncation": troncat
-    };
-    ai.query(inputs).then(function (outputs) {
-        var image = outputs.image;
-        img = createImg(image);
-        img.hide();
-    });
-    ai.info().then(function (info) { return console.log(info); });
-    console.log(z);
-    make_request();
 }
 function windowResized() {
     p6_ResizeCanvas();

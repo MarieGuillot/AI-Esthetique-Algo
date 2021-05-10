@@ -2,7 +2,7 @@ let tmpImage: p5.Image
 let textCaption : p5.TEXT
 
 function preload() {
-    tmpImage = loadImage("../img/color.jpg")
+    tmpImage = loadImage("../img/color.png")
 }
 
 // -------------------
@@ -16,15 +16,16 @@ const params = {
 gui.add(params, "Download_Image")
 
 const ai = new rw.HostedModel({
-  url: "https://im2txt-b2bbb314.hosted-models.runwayml.cloud/v1/",
-  token: "bdVAwUUmqCUzAlxw3ZoERQ==",
+  url: "https://im2txt-63bdf34c.hosted-models.runwayml.cloud/v1/",
+  token: "WPvdUSaMUebtl+aeWAbWFw==",
 });
   
   let img: p5.Element
 
   let z = []
   let noiseZ = 1;
-  let colorText = 0;
+  let colorText = 50;
+  let typoNoms;
    
   function mouseClicked () {
    
@@ -41,7 +42,7 @@ function draw() {
   if (textCaption) {
     fill(colorText);
     if (colorText<190) {
-        colorText +=0.8;
+        colorText +=2;
     }
     translate(width/2, height/2)
     textAlign(CENTER, CENTER);
@@ -60,9 +61,10 @@ function draw() {
           noStroke()
           rect(x, 0, 1, height) 
     }
+    p6_SaveImageSequence(100,"jpg");
   }
+  
 
-}
 
 // -------------------
 //    Initialization

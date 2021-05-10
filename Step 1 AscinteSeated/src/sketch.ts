@@ -11,8 +11,8 @@ gui.add(params, "Ellipse_Size", 0, 100, 1)
 gui.add(params, "Download_Image")
 
 const ai = new rw.HostedModel({
-  url: "https://ascinte-seated-38632546.hosted-models.runwayml.cloud/v1/",
-  token: "km9FKgA9Nx7oqaXvrIwhqQ==",
+  url: "https://ascinte-seated-2fc3490a.hosted-models.runwayml.cloud/v1/",
+  token: "jNbL7oB5g2LFlL3iHN880A==",
 });
   
   let img: p5.Element
@@ -64,10 +64,10 @@ function make_request() {
         img = createImg(image)
         img.hide()
         
-        if (frameNB<36) {
+        if (frameNB<35) {
           troncat -= 1
         } else {
-          troncat -= 0.99/84
+          troncat -= 0.1
         }
         p5.prototype.downloadFile(image, frameNB.toString(), "png")
         frameNB++
@@ -100,7 +100,7 @@ function setup() {
   ai.info().then(info => console.log(info));
   console.log(z);
 
-  //make_request()
+  make_request()
 }
 
 function windowResized() {

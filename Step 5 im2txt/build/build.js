@@ -1,7 +1,7 @@
 var tmpImage;
 var textCaption;
 function preload() {
-    tmpImage = loadImage("../img/color.jpg");
+    tmpImage = loadImage("../img/color.png");
 }
 var gui = new dat.GUI();
 var params = {
@@ -9,13 +9,14 @@ var params = {
 };
 gui.add(params, "Download_Image");
 var ai = new rw.HostedModel({
-    url: "https://im2txt-b2bbb314.hosted-models.runwayml.cloud/v1/",
-    token: "bdVAwUUmqCUzAlxw3ZoERQ==",
+    url: "https://im2txt-63bdf34c.hosted-models.runwayml.cloud/v1/",
+    token: "WPvdUSaMUebtl+aeWAbWFw==",
 });
 var img;
 var z = [];
 var noiseZ = 1;
-var colorText = 0;
+var colorText = 50;
+var typoNoms;
 function mouseClicked() {
 }
 function draw() {
@@ -24,7 +25,7 @@ function draw() {
     if (textCaption) {
         fill(colorText);
         if (colorText < 190) {
-            colorText += 0.8;
+            colorText += 2;
         }
         translate(width / 2, height / 2);
         textAlign(CENTER, CENTER);
@@ -40,6 +41,7 @@ function draw() {
         noStroke();
         rect(x, 0, 1, height);
     }
+    p6_SaveImageSequence(100, "jpg");
 }
 function setup() {
     p6_CreateCanvas();
@@ -58,7 +60,7 @@ function setup() {
 function windowResized() {
     p6_ResizeCanvas();
 }
-var __ASPECT_RATIO = 1;
+var __ASPECT_RATIO = 0.75;
 var __MARGIN_SIZE = 25;
 function __desiredCanvasWidth() {
     var windowRatio = windowWidth / windowHeight;

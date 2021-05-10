@@ -21,10 +21,7 @@ const ai = new rw.HostedModel({
 
   let troncat = 37
    
-  function mouseClicked () {
-    /*for (let i = 0; i<512; i++) {
-        z[i] *=34
-    }*/
+  /*function mouseClicked () {
 
     troncat -= 0.1
 
@@ -39,17 +36,20 @@ const ai = new rw.HostedModel({
         img.hide()
         // use the outputs in your project
       });
-  }
+  }*/
 
 // -------------------
 //       Drawing
 // -------------------
 
 function draw() {
-    if (img)
-        image(img, 0, 0, width, height)
+    if (img) {
+      image(img, 0, 0, width, height);
+      p6_SaveImageSequence(120,"jpg");
+      }
 
-        let i;
+    let i;
+
     for (i = 0; i<36; i++) {
       troncat -= 1
 
@@ -65,7 +65,7 @@ function draw() {
       });
     } 
 
-    if (i==36) {
+    if (i>36 && i<84) {
       troncat -= 0.99/84
 
       const inputs = {

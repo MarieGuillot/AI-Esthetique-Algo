@@ -37,7 +37,7 @@ function setup() {
 function windowResized() {
     p6_ResizeCanvas();
 }
-var __ASPECT_RATIO = 1;
+var __ASPECT_RATIO = 0.75;
 var __MARGIN_SIZE = 25;
 function __desiredCanvasWidth() {
     var windowRatio = windowWidth / windowHeight;

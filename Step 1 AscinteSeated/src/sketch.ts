@@ -45,45 +45,37 @@ const ai = new rw.HostedModel({
 function draw() {
     if (img) {
       image(img, 0, 0, width, height);
-      p6_SaveImageSequence(120,"jpg");
       }
-
-    let i;
-
-    for (i = 0; i<36; i++) {
-      troncat -= 1
-
-    const inputs = {
-        "z": z,
-        "truncation": troncat
-      };
-
-    ai.query(inputs).then(outputs => {
-        const { image } = outputs;
-        img = createImg(image)
-        img.hide()
-      });
-    } 
-
-    if (i>36 && i<84) {
-      troncat -= 0.99/84
-
-      const inputs = {
-          "z": z,
-          "truncation": troncat
-        };
-  
-      ai.query(inputs).then(outputs => {
-          const { image } = outputs;
-          img = createImg(image)
-          img.hide()
-        });
-    }
 }
 
 // -------------------
 //    Initialization
 // -------------------
+let frameNB = 0
+const NB_FRAMES_TO_EXPORT = 120
+
+function make_request() {
+    const inputs = {
+      "z": z,
+      "truncation": troncat
+    };
+    ai.query(inputs).then(outputs => {
+        const { image } = outputs
+        img = createImg(image)
+        img.hide()
+        
+        if (frameNB<36) {
+          troncat -= 1
+        } else {
+          troncat -= 0.99/84
+        }
+        p5.prototype.downloadFile(image, frameNB.toString(), "png")
+        frameNB++
+        if (frameNB < NB_FRAMES_TO_EXPORT) {
+          make_request()
+        }
+    });
+}
 
 function setup() {
     p6_CreateCanvas()
@@ -107,6 +99,8 @@ function setup() {
 
   ai.info().then(info => console.log(info));
   console.log(z);
+
+  //make_request()
 }
 
 function windowResized() {

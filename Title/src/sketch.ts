@@ -55,7 +55,7 @@ function draw() {
        // }
     }
 
-    //p6_SaveImageSequence(100,"jpg");
+    p6_SaveImageSequence(120,"jpg");
 
     
 

@@ -33,6 +33,7 @@ function draw() {
         noStroke();
         rect(0, x, width, 1);
     }
+    p6_SaveImageSequence(120, "jpg");
 }
 function setup() {
     p6_CreateCanvas();

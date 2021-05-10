@@ -12,8 +12,14 @@ var ai = new rw.HostedModel({
 var img;
 var z = [];
 var troncat = 37;
-function mouseClicked() {
-    troncat -= 0.1;
+function draw() {
+    if (img) {
+        image(img, 0, 0, width, height);
+    }
+}
+var frameNB = 0;
+var NB_FRAMES_TO_EXPORT = 120;
+function make_request() {
     var inputs = {
         "z": z,
         "truncation": troncat
@@ -22,36 +28,18 @@ function mouseClicked() {
         var image = outputs.image;
         img = createImg(image);
         img.hide();
+        if (frameNB < 36) {
+            troncat -= 1;
+        }
+        else {
+            troncat -= 0.99 / 84;
+        }
+        p5.prototype.downloadFile(image, frameNB.toString(), "png");
+        frameNB++;
+        if (frameNB < NB_FRAMES_TO_EXPORT) {
+            make_request();
+        }
     });
-}
-function draw() {
-    if (img)
-        image(img, 0, 0, width, height);
-    var i;
-    for (i = 0; i < 36; i++) {
-        troncat -= 1;
-        var inputs = {
-            "z": z,
-            "truncation": troncat
-        };
-        ai.query(inputs).then(function (outputs) {
-            var image = outputs.image;
-            img = createImg(image);
-            img.hide();
-        });
-    }
-    if (i == 36) {
-        troncat -= 0.99 / 84;
-        var inputs = {
-            "z": z,
-            "truncation": troncat
-        };
-        ai.query(inputs).then(function (outputs) {
-            var image = outputs.image;
-            img = createImg(image);
-            img.hide();
-        });
-    }
 }
 function setup() {
     p6_CreateCanvas();
@@ -73,7 +61,7 @@ function setup() {
 function windowResized() {
     p6_ResizeCanvas();
 }
-var __ASPECT_RATIO = 1;
+var __ASPECT_RATIO = 0.75;
 var __MARGIN_SIZE = 25;
 function __desiredCanvasWidth() {
     var windowRatio = windowWidth / windowHeight;

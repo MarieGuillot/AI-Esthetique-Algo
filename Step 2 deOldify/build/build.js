@@ -1,48 +1,42 @@
+var tmpImage;
+function preload() {
+    tmpImage = loadImage("img/old.png");
+}
 var gui = new dat.GUI();
 var params = {
+    Ellipse_Size: 30,
     Download_Image: function () { return save(); },
 };
+gui.add(params, "Ellipse_Size", 0, 100, 1);
 gui.add(params, "Download_Image");
-var typoTitre;
-var typoNoms;
-var noiseZ = 1;
-var colorText = 0;
-var time = 0;
+var ai = new rw.HostedModel({
+    url: "https://deoldify-adc4e64d.hosted-models.runwayml.cloud/v1",
+    token: "PKOqb8Tnp0znteIEhJqdTw==",
+});
 function draw() {
-    blendMode(BLEND);
-    translate(width / 2, height / 2);
-    background(0);
-    textFont(typoTitre);
-    textSize(height / 5);
-    textAlign(CENTER, CENTER);
-    fill(colorText);
-    if (colorText < 190) {
-        colorText += 0.8;
-    }
-    var title = 'Alive';
-    text(title, 0, 0);
-    textFont(typoNoms);
-    textSize(height / 20);
-    var names = 'Sirine Bradai & Marie Guillot';
-    text(names, 0, 2 * height / 5);
-    resetMatrix();
-    blendMode(OVERLAY);
-    noiseZ += 0.05;
-    for (var x = 0; x < height; x += 1) {
-        fill(noise(0.1 * x, noiseZ) * 256);
-        noStroke();
-        rect(0, x, width, 1);
-    }
+    if (outImage)
+        image(outImage, 0, 0, width, height);
 }
+var img;
+var outImage;
 function setup() {
     p6_CreateCanvas();
-    typoTitre = loadFont('./font/Sarpanch-Bold.ttf');
-    typoNoms = loadFont('./font/TitilliumWeb-ExtraLight.ttf');
+    tmpImage.loadPixels();
+    var base64Image = tmpImage.canvas.toDataURL();
+    var inputs = {
+        "image": base64Image,
+        "render_factor": 20
+    };
+    ai.query(inputs).then(function (outputs) {
+        var image = outputs.image;
+        outImage = createImg(image);
+        outImage.hide();
+    });
 }
 function windowResized() {
     p6_ResizeCanvas();
 }
-var __ASPECT_RATIO = 0.75;
+var __ASPECT_RATIO = 1;
 var __MARGIN_SIZE = 25;
 function __desiredCanvasWidth() {
     var windowRatio = windowWidth / windowHeight;

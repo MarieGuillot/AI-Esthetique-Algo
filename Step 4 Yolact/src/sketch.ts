@@ -34,7 +34,6 @@ const ai = new rw.HostedModel({
 function draw() {
   if (img)
     image(img, 0, 0, width, height)
-        //p6_SaveImageSequence(3,"jpg");
 
 }
 

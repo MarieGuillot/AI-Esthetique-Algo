@@ -20,23 +20,6 @@ const ai = new rw.HostedModel({
   let z = []
 
   let troncat = 37
-   
-  /*function mouseClicked () {
-
-    troncat -= 0.1
-
-    const inputs = {
-        "z": z,
-        "truncation": troncat
-      };
-
-    ai.query(inputs).then(outputs => {
-        const { image } = outputs;
-        img = createImg(image)
-        img.hide()
-        // use the outputs in your project
-      });
-  }*/
 
 // -------------------
 //       Drawing

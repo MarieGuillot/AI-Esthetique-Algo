@@ -49,7 +49,6 @@ function draw() {
     textFont(typoNoms);
     textSize(height / 20);
     text(textCaption, 0, 0);}
-        //p6_SaveImageSequence(3,"jpg");
   
 
   resetMatrix()

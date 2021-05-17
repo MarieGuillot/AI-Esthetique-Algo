@@ -3,7 +3,7 @@
 // -------------------
 let tmpImage: p5.Image
 function preload() {
-    tmpImage = loadImage("img/5.png")
+    tmpImage = loadImage("img/5.png") // On importe l'image
 }
 
 

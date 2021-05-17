@@ -5,7 +5,6 @@ let tmpImage: p5.Image
 function preload() {
     tmpImage = loadImage("img/5.png")
 }
-//const base64Image = tmpImage.canvas.toDataURL()
 
 
 const gui = new dat.GUI()
